@@ -1,11 +1,6 @@
 package org.pileka.hotel_api.service;
 
-import org.pileka.hotel_api.dto.CreateHotelDTO;
-import org.pileka.hotel_api.dto.HistogramDTO;
-import org.pileka.hotel_api.dto.SearchHotelDTO;
-import org.pileka.hotel_api.dto.ShortResponseHotelDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.pileka.hotel_api.dto.*;
 
 import java.util.List;
 
@@ -13,11 +8,11 @@ public interface HotelService {
 
     ShortResponseHotelDTO create(CreateHotelDTO createDto);
 
-    ShortResponseHotelDTO get(long id);
+    ResponseHotelDTO get(long id);
 
-    Page<ShortResponseHotelDTO> get(Pageable pageable);
+    List<ShortResponseHotelDTO> get();
 
-    Page<ShortResponseHotelDTO> get(SearchHotelDTO searchDto, Pageable pageable);
+    List<ShortResponseHotelDTO> get(SearchHotelDTO searchDto);
 
     List<HistogramDTO> getHistogram(String fieldName);
 
