@@ -10,6 +10,8 @@ import org.pileka.hotel_api.dto.ShortResponseHotelDTO;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @UtilityClass
 public class HotelTestUtil {
     public Hotel getHotel() {
@@ -83,6 +85,69 @@ public class HotelTestUtil {
                 "Business center",
                 "Meeting rooms"
         );
+    }
+
+    public void assertDtoEqualsModel(ResponseHotelDTO dto, Hotel model) {
+        if (dto == null && model == null) return;
+        assertNotNull(dto, "ResponseHotelDTO should not be null");
+        assertNotNull(model, "Hotel model should not be null");
+
+        assertEquals(dto.getId(), model.getId());
+        assertEquals(dto.getName(), model.getName());
+        assertEquals(dto.getDescription(), model.getDescription());
+        assertEquals(dto.getBrand(), model.getBrand());
+
+        AddressTestUtil.assertDtoEqualsModel(dto.getAddress(), model.getAddress());
+        ContactsTestUtil.assertDtoEqualsModel(dto.getContacts(), model.getContacts());
+        ArrivalTimeTestUtil.assertDtoEqualsModel(dto.getArrivalTime(), model.getArrivalTime());
+
+        assertIterableEquals(dto.getAmenities(), model.getAmenities());
+    }
+
+    public void assertDtoEqualsModel(ShortResponseHotelDTO dto, Hotel model) {
+        if (dto == null && model == null) return;
+        assertNotNull(dto, "ShortResponseHotelDTO should not be null");
+        assertNotNull(model, "Hotel model should not be null");
+
+        assertEquals(dto.getId(), model.getId());
+        assertEquals(dto.getName(), model.getName());
+        assertEquals(dto.getDescription(), model.getDescription());
+
+        if (model.getContacts() != null) {
+            assertEquals(dto.getPhone(), model.getContacts().getPhone());
+        } else {
+            assertNull(dto.getPhone());
+        }
+
+        if (model.getAddress() != null) {
+            String expectedAddress = String.format("%s %s, %s, %s, %s",
+                    model.getAddress().getHouseNumber(),
+                    model.getAddress().getStreet(),
+                    model.getAddress().getCity(),
+                    model.getAddress().getPostCode(),
+                    model.getAddress().getCountry());
+            assertEquals(dto.getAddress(), expectedAddress);
+        } else {
+            assertNull(dto.getAddress());
+        }
+    }
+
+    public void assertModelEqualsDto(Hotel model, CreateHotelDTO dto) {
+        if (model == null && dto == null) return;
+        assertNotNull(model, "Hotel model should not be null");
+        assertNotNull(dto, "CreateHotelDTO should not be null");
+
+        assertEquals(model.getName(), dto.getName());
+        assertEquals(model.getDescription(), dto.getDescription());
+        assertEquals(model.getBrand(), dto.getBrand());
+
+        AddressTestUtil.assertModelEqualsDto(model.getAddress(), dto.getAddress());
+        ContactsTestUtil.assertModelEqualsDto(model.getContacts(), dto.getContacts());
+        ArrivalTimeTestUtil.assertModelEqualsDto(model.getArrivalTime(), dto.getArrivalTime());
+
+        if (model.getAmenities() != null && dto.getAmenities() != null) {
+            assertIterableEquals(model.getAmenities(), dto.getAmenities());
+        }
     }
     
 
