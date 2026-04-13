@@ -1,7 +1,6 @@
 package org.pileka.hotel_api.repository.impl;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.pileka.hotel_api.dto.HistogramDTO;
 import org.pileka.hotel_api.repository.HistogramHotelRepository;
