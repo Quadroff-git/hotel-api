@@ -129,6 +129,7 @@
 								<path>
 									<groupId>org.mapstruct</groupId>
 									<artifactId>mapstruct-processor</artifactId>
+									<version>1.6.3</version>
 								</path>
 								<path>
 									<groupId>org.projectlombok</groupId>
@@ -146,8 +147,9 @@
 						<configuration>
 							<annotationProcessorPaths>
 								<path>
-									<groupId>org.projectlombok</groupId>
-									<artifactId>lombok</artifactId>
+									<groupId>org.mapstruct</groupId>
+									<artifactId>mapstruct-processor</artifactId>
+									<version>1.6.3</version>
 								</path>
 								<path>
 									<groupId>org.projectlombok</groupId>
