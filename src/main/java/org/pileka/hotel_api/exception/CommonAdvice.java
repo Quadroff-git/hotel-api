@@ -1,5 +1,7 @@
 package org.pileka.hotel_api.exception;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class CommonAdvice {
+
+    private static final Log log = LogFactory.getLog(CommonAdvice.class);
 
     @ExceptionHandler(EntityDoesntExistException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
@@ -34,18 +38,24 @@ public class CommonAdvice {
             errorInfo.put(fieldName, message);
         });
 
-        return ResponseEntity.badRequest().body(errorInfo.toString());
+        String msg = errorInfo.toString();
+
+        log.debug("Jakarta Validation caused an exception: " + msg);
+
+        return ResponseEntity.badRequest().body(msg);
     }
 
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleDataAccess(DataAccessException e) {
+        log.error("Data access exception", e);
         return ErrorResponse.create(e, HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong while accessing the database:" + e.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(code= HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleGenericInternalError(RuntimeException e) {
+        log.error("Unexpected error", e);
         return ErrorResponse.create(e, HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error happened: " + e.getMessage());
     }
 }
