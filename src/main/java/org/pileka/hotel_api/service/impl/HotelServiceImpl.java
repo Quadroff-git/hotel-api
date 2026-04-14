@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.pileka.hotel_api.domain.Hotel;
 import org.pileka.hotel_api.dto.*;
 import org.pileka.hotel_api.exception.EntityDoesntExistException;
+import org.pileka.hotel_api.exception.InvalidInputException;
 import org.pileka.hotel_api.mapper.HotelMapper;
 import org.pileka.hotel_api.repository.HotelRepository;
 import org.pileka.hotel_api.service.HotelService;
@@ -55,14 +56,14 @@ public class HotelServiceImpl implements HotelService {
             return new HistogramResponseDTO(repository.getHistogram(fieldName));
         }
         else {
-            throw new IllegalArgumentException(fieldName + " is not a recognized field name!");
+            throw new InvalidInputException(fieldName + " is not a recognized field name!");
         }
     }
 
     @Override
     public void addAmenities(long id, List<String> amenities) {
         if (amenities.isEmpty()) {
-            throw new IllegalArgumentException("Amenities list can't be empty!");
+            throw new InvalidInputException("Amenities list can't be empty!");
         }
 
         Hotel hotel = repository.findById(id)
