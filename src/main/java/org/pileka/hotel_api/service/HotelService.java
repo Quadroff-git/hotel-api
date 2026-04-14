@@ -3,8 +3,12 @@ package org.pileka.hotel_api.service;
 import org.pileka.hotel_api.dto.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface HotelService {
+
+    // Field names supported in getHistogram()
+    Set<String> FIELD_NAMES = Set.of("brand", "city", "country", "amenities");
 
     ShortResponseHotelDTO create(CreateHotelDTO createDto);
 
