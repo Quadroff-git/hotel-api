@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
- * DTO representing a single value-count pair for histogram queries
+ * A wrapper DTO for responses to histogram queries
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistogramDTO {
-    private String columnValue;
-    private Long count;
+public class HistogramResponseDTO {
+
+    List<HistogramItemDTO> data;
+
 }

@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 import org.pileka.hotel_api.domain.Hotel;
 import org.pileka.hotel_api.dto.SearchHotelDTO;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 @UtilityClass
 public class HotelSpecificationUtil {
 
-    public static Specification<Hotel> fromSearchDTO(SearchHotelDTO searchDTO) {
+    public Specification<Hotel> fromSearchDTO(SearchHotelDTO searchDTO) {
         if (searchDTO == null) {
             return (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
         }
@@ -31,7 +32,7 @@ public class HotelSpecificationUtil {
     /**
      * Specification for filtering by hotel name (case-insensitive, partial match)
      */
-    public static Specification<Hotel> hasName(String name) {
+    public Specification<Hotel> hasName(String name) {
         return (root, query, criteriaBuilder) -> {
             if (!StringUtils.hasText(name)) {
                 return criteriaBuilder.conjunction();
@@ -46,7 +47,7 @@ public class HotelSpecificationUtil {
     /**
      * Specification for filtering by brand (case-insensitive, exact match)
      */
-    public static Specification<Hotel> hasBrand(String brand) {
+    public Specification<Hotel> hasBrand(String brand) {
         return (root, query, criteriaBuilder) -> {
             if (!StringUtils.hasText(brand)) {
                 return criteriaBuilder.conjunction();
@@ -62,7 +63,7 @@ public class HotelSpecificationUtil {
      * Specification for filtering by city (case-insensitive, exact match)
      * Accesses nested Address object
      */
-    public static Specification<Hotel> hasCity(String city) {
+    public Specification<Hotel> hasCity(String city) {
         return (root, query, criteriaBuilder) -> {
             if (!StringUtils.hasText(city)) {
                 return criteriaBuilder.conjunction();
@@ -78,7 +79,7 @@ public class HotelSpecificationUtil {
      * Specification for filtering by country (case-insensitive, exact match)
      * Accesses nested Address object
      */
-    public static Specification<Hotel> hasCountry(String country) {
+    public Specification<Hotel> hasCountry(String country) {
         return (root, query, criteriaBuilder) -> {
             if (!StringUtils.hasText(country)) {
                 return criteriaBuilder.conjunction();
@@ -94,9 +95,9 @@ public class HotelSpecificationUtil {
      * Specification for filtering by amenities (case-insensitive, exact match)
      * Hotel must have ALL specified amenities (AND condition)
      */
-    public static Specification<Hotel> hasAmenities(List<String> amenities) {
+    public Specification<Hotel> hasAmenities(List<String> amenities) {
         return (root, query, criteriaBuilder) -> {
-            if (amenities.isEmpty()) {
+            if (CollectionUtils.isEmpty(amenities)) {
                 return criteriaBuilder.conjunction();
             }
 
@@ -109,14 +110,13 @@ public class HotelSpecificationUtil {
             // Create predicate for each amenity
             List<Predicate> amenityPredicates = new ArrayList<>();
             for (String amenity : amenities) {
-                if (StringUtils.hasText(amenity)) {
-                    amenityPredicates.add(
-                            criteriaBuilder.equal(
-                                    amenitiesJoin.get("amenity"),
-                                    amenity.toLowerCase()
-                            )
-                    );
-                }
+                Join<Hotel, String> join = root.join("amenities");
+                amenityPredicates.add(
+                        criteriaBuilder.equal(
+                                criteriaBuilder.lower(join),
+                                amenity.toLowerCase()
+                        )
+                );
             }
 
             // Combine all amenity predicates with AND (hotel must have ALL specified amenities)

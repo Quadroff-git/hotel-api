@@ -50,9 +50,9 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<HistogramDTO> getHistogram(String fieldName) {
+    public HistogramResponseDTO getHistogram(String fieldName) {
         if (FIELD_NAMES.contains(fieldName.strip().toLowerCase())) {
-            return repository.getHistogram(fieldName);
+            return new HistogramResponseDTO(repository.getHistogram(fieldName));
         }
         else {
             throw new IllegalArgumentException(fieldName + " is not a recognized field name!");

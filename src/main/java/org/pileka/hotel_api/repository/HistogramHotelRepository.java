@@ -1,9 +1,9 @@
 package org.pileka.hotel_api.repository;
 
-import org.pileka.hotel_api.dto.HistogramDTO;
+import org.pileka.hotel_api.dto.HistogramItemDTO;
 import java.util.List;
 
 public interface HistogramHotelRepository {
 
-    List<HistogramDTO> getHistogram(String columnName);
+    List<HistogramItemDTO> getHistogram(String columnName);
 }
