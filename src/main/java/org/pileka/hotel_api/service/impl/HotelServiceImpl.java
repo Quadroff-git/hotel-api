@@ -50,8 +50,8 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<HistogramItemDTO> getHistogram(String fieldName) {
-        return repository.getHistogram(fieldName);
+    public HistogramResponseDTO getHistogram(String fieldName) {
+        return new HistogramResponseDTO(repository.getHistogram(fieldName));
     }
 
     @Override
