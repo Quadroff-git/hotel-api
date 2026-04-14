@@ -29,7 +29,7 @@ public class CommonAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+    public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
         Map<String, String> errorInfo = new HashMap<>();
 
         e.getBindingResult().getAllErrors().forEach(error -> {
@@ -43,14 +43,14 @@ public class CommonAdvice {
 
         log.debug("Jakarta Validation caused an exception: " + msg);
 
-        return ResponseEntity.badRequest().body(msg);
+        return ErrorResponse.create(e, HttpStatus.BAD_REQUEST, msg);
     }
 
     @ExceptionHandler(InvalidInputException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleInvalidInput(InvalidInputException e) {
+    public ErrorResponse handleInvalidInput(InvalidInputException e) {
         log.debug("Invalid input caused an exception: ", e);
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return ErrorResponse.create(e, HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ExceptionHandler(DataAccessException.class)
