@@ -27,6 +27,6 @@ public interface HotelController {
     List<HistogramDTO> getHistogram(@PathVariable String param);
 
     @PostMapping(path = "/hotels/{id}/amenities")
-    void addAmenities(@RequestBody List<String> amenities);
+    void addAmenities(@PathVariable long id, @RequestBody List<String> amenities);
 
 }
