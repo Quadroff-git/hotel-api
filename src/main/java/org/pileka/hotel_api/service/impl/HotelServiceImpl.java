@@ -8,12 +8,9 @@ import org.pileka.hotel_api.mapper.HotelMapper;
 import org.pileka.hotel_api.repository.HotelRepository;
 import org.pileka.hotel_api.service.HotelService;
 import org.pileka.hotel_api.specification.HotelSpecificationUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,10 +61,14 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void addAmenities(long id, List<String> amenities) {
+        if (amenities.isEmpty()) {
+            throw new IllegalArgumentException("Amenities list can't be empty!");
+        }
+
         Hotel hotel = repository.findById(id)
                 .orElseThrow(() -> new EntityDoesntExistException("Hotel with id " + id + "doesn't exist"));
 
-        hotel.getAmenities().addAll(amenities);
+        hotel.getAmenities().addAll(amenities.stream().filter(s -> !s.isBlank()).toList());
 
         repository.save(hotel);
     }
