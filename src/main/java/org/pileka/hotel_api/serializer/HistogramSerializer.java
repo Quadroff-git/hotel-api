@@ -1,24 +1,25 @@
 package org.pileka.hotel_api.serializer;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import org.pileka.hotel_api.dto.HistogramDTO;
+import org.pileka.hotel_api.dto.HistogramItemDTO;
+import org.pileka.hotel_api.dto.HistogramResponseDTO;
 import org.springframework.boot.jackson.JacksonComponent;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Custom serialization logic for histogram responses
  */
 @JacksonComponent
-public class HistogramSerializer extends JsonSerializer<List<HistogramDTO>> {
+public class HistogramSerializer extends ValueSerializer<HistogramResponseDTO> {
+
     @Override
-    public void serialize(List<HistogramDTO> value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(HistogramResponseDTO value, JsonGenerator gen, SerializationContext ctxt) throws JacksonException {
         gen.writeStartObject();
-        for (HistogramDTO item : value) {
-            gen.writeNumberField(item.getColumnValue(), item.getCount());
+        for (HistogramItemDTO item : value.getData()) {
+            gen.writeNumberProperty(item.getColumnValue(), item.getCount());
         }
         gen.writeEndObject();
     }
