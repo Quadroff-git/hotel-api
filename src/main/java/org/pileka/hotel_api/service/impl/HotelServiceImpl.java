@@ -8,12 +8,9 @@ import org.pileka.hotel_api.mapper.HotelMapper;
 import org.pileka.hotel_api.repository.HotelRepository;
 import org.pileka.hotel_api.service.HotelService;
 import org.pileka.hotel_api.specification.HotelSpecificationUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +50,8 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public List<HistogramDTO> getHistogram(String fieldName) {
-        return repository.getHistogram(fieldName);
+    public HistogramResponseDTO getHistogram(String fieldName) {
+        return new HistogramResponseDTO(repository.getHistogram(fieldName));
     }
 
     @Override

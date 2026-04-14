@@ -2,7 +2,7 @@ package org.pileka.hotel_api.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.pileka.hotel_api.dto.HistogramDTO;
+import org.pileka.hotel_api.dto.HistogramItemDTO;
 import org.pileka.hotel_api.repository.HistogramHotelRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +19,7 @@ public class HistogramHotelRepositoryImpl implements HistogramHotelRepository {
     // custom fragment repository interface and implementation so that the resulting HotelRepository only has one method
     // for all its histogram needs
     @Override
-    public List<HistogramDTO> getHistogram(String columnName) {
+    public List<HistogramItemDTO> getHistogram(String columnName) {
         if (columnName.equals("amenities")) {
             return getAmenitiesHistogram();
         }
@@ -28,8 +28,8 @@ public class HistogramHotelRepositoryImpl implements HistogramHotelRepository {
         }
     }
 
-    private List<HistogramDTO> getColumnHistogram(String columnName) {
-        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramDTO(" +
+    private List<HistogramItemDTO> getColumnHistogram(String columnName) {
+        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramItemDTO(" +
                 "  CASE WHEN :columnName = 'brand' THEN h.brand " +
                 "       WHEN :columnName = 'city' THEN h.address.city " +
                 "       WHEN :columnName = 'country' THEN h.address.country " +
@@ -43,13 +43,13 @@ public class HistogramHotelRepositoryImpl implements HistogramHotelRepository {
                 "       WHEN :columnName = 'city' THEN h.address.city " +
                 "       WHEN :columnName = 'country' THEN h.address.country " +
                 "       ELSE 'error'" +
-                "  END", HistogramDTO.class).setParameter("columnName", columnName).getResultList();
+                "  END", HistogramItemDTO.class).setParameter("columnName", columnName).getResultList();
     }
 
-    private List<HistogramDTO> getAmenitiesHistogram() {
-        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramDTO(a, COUNT(h)) " +
+    private List<HistogramItemDTO> getAmenitiesHistogram() {
+        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramItemDTO(a, COUNT(h)) " +
                 "FROM Hotel h JOIN h.amenities a " +
-                "GROUP BY a", HistogramDTO.class).getResultList();
+                "GROUP BY a", HistogramItemDTO.class).getResultList();
     }
 
 }
