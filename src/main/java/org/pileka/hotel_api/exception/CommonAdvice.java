@@ -45,6 +45,13 @@ public class CommonAdvice {
         return ResponseEntity.badRequest().body(msg);
     }
 
+    @ExceptionHandler(InvalidInputException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleInvalidInput(InvalidInputException e) {
+        log.debug("Invalid input caused an exception: ", e);
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleDataAccess(DataAccessException e) {
