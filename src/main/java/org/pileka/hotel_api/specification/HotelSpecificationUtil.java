@@ -7,6 +7,7 @@ import lombok.experimental.UtilityClass;
 import org.pileka.hotel_api.domain.Hotel;
 import org.pileka.hotel_api.dto.SearchHotelDTO;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class HotelSpecificationUtil {
      */
     public static Specification<Hotel> hasAmenities(List<String> amenities) {
         return (root, query, criteriaBuilder) -> {
-            if (amenities.isEmpty()) {
+            if (CollectionUtils.isEmpty(amenities)) {
                 return criteriaBuilder.conjunction();
             }
 
