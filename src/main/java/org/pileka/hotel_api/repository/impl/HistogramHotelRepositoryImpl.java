@@ -29,7 +29,7 @@ public class HistogramHotelRepositoryImpl implements HistogramHotelRepository {
     }
 
     private List<HistogramDTO> getColumnHistogram(String columnName) {
-        return entityManager.createQuery("SELECT new com.example.dto.HistogramDTO(" +
+        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramDTO(" +
                 "  CASE WHEN :columnName = 'brand' THEN h.brand " +
                 "       WHEN :columnName = 'city' THEN h.address.city " +
                 "       WHEN :columnName = 'country' THEN h.address.country " +
@@ -47,7 +47,7 @@ public class HistogramHotelRepositoryImpl implements HistogramHotelRepository {
     }
 
     private List<HistogramDTO> getAmenitiesHistogram() {
-        return entityManager.createQuery("SELECT new com.example.dto.HistogramDTO(a, COUNT(h)) " +
+        return entityManager.createQuery("SELECT new org.pileka.hotel_api.dto.HistogramDTO(a, COUNT(h)) " +
                 "FROM Hotel h JOIN h.amenities a " +
                 "GROUP BY a", HistogramDTO.class).getResultList();
     }
