@@ -1,14 +1,9 @@
 package org.pileka.hotel_api.repository;
 
 import org.pileka.hotel_api.domain.Hotel;
-import org.pileka.hotel_api.dto.HistogramDTO;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 public interface HotelRepository extends ListCrudRepository<Hotel, Long>,
         JpaSpecificationExecutor<Hotel>,

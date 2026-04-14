@@ -35,7 +35,7 @@ public class HotelControllerImpl implements HotelController {
     }
 
     @Override
-    public List<HistogramDTO> getHistogram(String param) {
+    public List<HistogramItemDTO> getHistogram(String param) {
         return service.getHistogram(param);
     }
 

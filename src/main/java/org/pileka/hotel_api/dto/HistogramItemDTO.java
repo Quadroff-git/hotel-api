@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistogramDTO {
+public class HistogramItemDTO {
     private String columnValue;
     private Long count;
 }

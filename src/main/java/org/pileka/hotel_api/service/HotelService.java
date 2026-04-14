@@ -14,7 +14,7 @@ public interface HotelService {
 
     List<ShortResponseHotelDTO> get(SearchHotelDTO searchDto);
 
-    List<HistogramDTO> getHistogram(String fieldName);
+    List<HistogramItemDTO> getHistogram(String fieldName);
 
     /**
      * Add a list of amenities to the existing amenities of the specified hotel
