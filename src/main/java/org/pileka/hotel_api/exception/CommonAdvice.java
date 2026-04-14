@@ -23,6 +23,7 @@ public class CommonAdvice {
     @ExceptionHandler(EntityDoesntExistException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ResponseEntity<String> handleEntityDoesntExist(EntityDoesntExistException e) {
+        log.debug("Attempted access to an unexisting entity: ", e);
         return ResponseEntity.notFound().build();
     }
 
