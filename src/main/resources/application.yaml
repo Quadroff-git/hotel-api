@@ -23,8 +23,6 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     drop-first: false
     default-schema: public
-#    contexts: all
-#    labels: all
 
 server:
   port: 8092
