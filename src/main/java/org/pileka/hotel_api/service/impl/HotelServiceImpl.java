@@ -12,6 +12,7 @@ import org.pileka.hotel_api.specification.HotelSpecificationUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -52,8 +53,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HistogramResponseDTO getHistogram(String fieldName) {
-        if (FIELD_NAMES.contains(fieldName.strip().toLowerCase())) {
-            return new HistogramResponseDTO(repository.getHistogram(fieldName));
+        String sanitizedFieldName = fieldName.strip().toLowerCase();
+        if (FIELD_NAMES.contains(sanitizedFieldName)) {
+            return new HistogramResponseDTO(repository.getHistogram(sanitizedFieldName));
         }
         else {
             throw new InvalidInputException(fieldName + " is not a recognized field name!");
@@ -69,7 +71,12 @@ public class HotelServiceImpl implements HotelService {
         Hotel hotel = repository.findById(id)
                 .orElseThrow(() -> new EntityDoesntExistException("Hotel with id " + id + "doesn't exist"));
 
-        hotel.getAmenities().addAll(amenities.stream().filter(s -> !s.isBlank()).toList());
+        hotel.setAmenities(
+                Stream.concat(
+                    hotel.getAmenities().stream(),
+                    amenities.stream().filter(s -> !s.isBlank())
+                ).distinct().toList()
+        );
 
         repository.save(hotel);
     }
