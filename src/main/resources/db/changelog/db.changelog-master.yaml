@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - preConditions:
+      - runningAs:
+          username: user
+
+  - include:
+      file: db/changelog/changes/001-initial-schema.yaml
