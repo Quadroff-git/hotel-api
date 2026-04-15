@@ -14,3 +14,5 @@ All requirements specified are met
 Additional features added:
 - Clean layer separation
 - DTO validation using Jakarta Validation
+- Exception handling and logging in ControllerAdvice-annotated classes
+- Comprehensive unit tests for mappers and services
