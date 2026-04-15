@@ -12,6 +12,7 @@ import org.pileka.hotel_api.specification.HotelSpecificationUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +64,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void addAmenities(long id, List<String> amenities) {
-        // TODO: make sure amenities are distinct
         if (amenities.isEmpty()) {
             throw new InvalidInputException("Amenities list can't be empty!");
         }
@@ -71,7 +71,12 @@ public class HotelServiceImpl implements HotelService {
         Hotel hotel = repository.findById(id)
                 .orElseThrow(() -> new EntityDoesntExistException("Hotel with id " + id + "doesn't exist"));
 
-        hotel.getAmenities().addAll(amenities.stream().filter(s -> !s.isBlank()).toList());
+        hotel.setAmenities(
+                Stream.concat(
+                    hotel.getAmenities().stream(),
+                    amenities.stream().filter(s -> !s.isBlank())
+                ).distinct().toList()
+        );
 
         repository.save(hotel);
     }
