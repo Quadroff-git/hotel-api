@@ -37,5 +37,5 @@ public class CreateHotelDTO {
     @Valid
     private ArrivalTimeDTO arrivalTime;
 
-    private List<@NotBlank @Size(min = 2, max = 100) String> amenities;
+    private List<@NotBlank String> amenities;
 }
