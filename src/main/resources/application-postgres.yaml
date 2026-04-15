@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:hoteldb}
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  h2:
+    console:
+      enabled: false  # Disable H2 console for PostgreSQL
