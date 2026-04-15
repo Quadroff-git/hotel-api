@@ -52,8 +52,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HistogramResponseDTO getHistogram(String fieldName) {
-        if (FIELD_NAMES.contains(fieldName.strip().toLowerCase())) {
-            return new HistogramResponseDTO(repository.getHistogram(fieldName));
+        String sanitizedFieldName = fieldName.strip().toLowerCase();
+        if (FIELD_NAMES.contains(sanitizedFieldName)) {
+            return new HistogramResponseDTO(repository.getHistogram(sanitizedFieldName));
         }
         else {
             throw new InvalidInputException(fieldName + " is not a recognized field name!");
@@ -62,6 +63,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void addAmenities(long id, List<String> amenities) {
+        // TODO: make sure amenities are distinct
         if (amenities.isEmpty()) {
             throw new InvalidInputException("Amenities list can't be empty!");
         }
