@@ -22,11 +22,12 @@ All requirements specified are met
 
 Additional features added:
 - Clean layer separation
-- DTO validation using Jakarta Validation
-- Exception handling and logging in ControllerAdvice-annotated class
-- Comprehensive unit tests for mappers and services
+- DTO validation using Jakarta Validation (validation is minimal, mostly checking for required fields and common formats)
+- Exception handling and logging in a ControllerAdvice-annotated class
+- Comprehensive unit tests for mappers and service layer
 - OpenAPI 3 documentation generation at runtime with `springdoc` 
   - Swagger UI available at `<localhost:8092/property-view/swagger-ui.html>`
   - JSON documentation available at `<localhost:8092/property-view/v3/api-docs>`
   - YAML documentation available at `<localhost:8092/property-view/v3/api-docs.yaml>`
 - Support for quick RDBMS switching: run the app with PostgreSQL support by adding one command-line parameter
+- Database schema management with Liquibase
