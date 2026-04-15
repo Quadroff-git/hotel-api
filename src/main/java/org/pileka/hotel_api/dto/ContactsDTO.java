@@ -16,11 +16,10 @@ import lombok.NoArgsConstructor;
 public class ContactsDTO {
 
     @NotBlank(message = "Phone number is required")
-    @Pattern(regexp = "^[\\+\\d][\\d\\s\\-\\(\\)]{5,20}$", message = "Invalid phone number format")
+    @Pattern(regexp = "^[\\+\\d][\\d\\s\\-\\(\\)\\.]{7,30}$", message = "Invalid phone number format")
     private String phone;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
-    @Size(max = 100, message = "Email must not exceed 100 characters")
     private String email;
 }
