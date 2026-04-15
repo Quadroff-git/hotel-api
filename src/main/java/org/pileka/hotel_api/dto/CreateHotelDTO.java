@@ -19,14 +19,11 @@ import java.util.List;
 public class CreateHotelDTO {
 
     @NotBlank(message = "Hotel name is required")
-    @Size(min = 2, max = 200, message = "Hotel name must be between 2 and 200 characters")
     private String name;
 
-    @Size(max = 2000, message = "Description must not exceed 2000 characters")
     private String description;
 
     @NotBlank(message = "Brand is required")
-    @Size(max = 100, message = "Brand name must not exceed 100 characters")
     private String brand;
 
     @Valid
@@ -40,6 +37,5 @@ public class CreateHotelDTO {
     @Valid
     private ArrivalTimeDTO arrivalTime;
 
-    @Size(max = 30, message = "Cannot have more than 30 amenities")
     private List<@NotBlank @Size(min = 2, max = 100) String> amenities;
 }
