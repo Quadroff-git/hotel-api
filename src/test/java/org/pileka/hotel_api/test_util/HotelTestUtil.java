@@ -30,7 +30,7 @@ public class HotelTestUtil {
     public CreateHotelDTO getCreateDto() {
         return CreateHotelDTO.builder()
                 .name("DoubleTree by Hilton Minsk")
-                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms")
+                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms in the Belorussian capital and stunning views of Minsk city from the hotel's 20th floor ...")
                 .brand("Hilton")
                 .address(AddressTestUtil.getAddressDTO())
                 .contacts(ContactsTestUtil.getContactsDTO())
@@ -43,7 +43,7 @@ public class HotelTestUtil {
         return ResponseHotelDTO.builder()
                 .id(1L)
                 .name("DoubleTree by Hilton Minsk")
-                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms")
+                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms in the Belorussian capital and stunning views of Minsk city from the hotel's 20th floor ...")
                 .brand("Hilton")
                 .address(AddressTestUtil.getAddressDTO())
                 .contacts(ContactsTestUtil.getContactsDTO())
@@ -56,7 +56,7 @@ public class HotelTestUtil {
         return ShortResponseHotelDTO.builder()
                 .id(1L)
                 .name("DoubleTree by Hilton Minsk")
-                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms")
+                .description("The DoubleTree by Hilton Hotel Minsk offers 193 luxurious rooms in the Belorussian capital and stunning views of Minsk city from the hotel's 20th floor ...")
                 .address("9 Pobediteley Avenue, Minsk, 220004, Belarus")
                 .phone("+375 17 309-80-00")
                 .build();
