@@ -11,7 +11,9 @@ import org.pileka.hotel_api.service.HotelService;
 import org.pileka.hotel_api.specification.HotelSpecificationUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -75,7 +77,7 @@ public class HotelServiceImpl implements HotelService {
                 Stream.concat(
                     hotel.getAmenities().stream(),
                     amenities.stream().filter(s -> !s.isBlank())
-                ).distinct().toList()
+                ).distinct().collect(Collectors.toCollection(ArrayList::new))
         );
 
         repository.save(hotel);
